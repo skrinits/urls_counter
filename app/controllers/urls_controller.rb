@@ -8,7 +8,9 @@ class UrlsController < ApplicationController
   end
 
   def show
-    @url.increment!(:request_counter)
+    @url.with_lock do
+      @url.increment!(:request_counter)
+    end
 
     redirect_to @url.full_version
   end
